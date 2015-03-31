@@ -11,20 +11,20 @@ import java.util.List;
 public class TemplateParameterDescriptor extends ToolParameterDescriptor{
     private List<ToolParameterDescriptor> toolParameterDescriptors;
 
-    public TemplateParameterDescriptor(String name, Class<?> type, int typeMask){
+    public TemplateParameterDescriptor(String name, Class<?> type, String parameterType){
         super(name, type);
-        super.setParameterTypeMask(typeMask);
-        this.setParameterTypeMask(ToolAdapterConstants.TEMPLATE_PARAM_MASK);
+        super.setParameterType(parameterType);
+        this.setParameterType(ToolAdapterConstants.TEMPLATE_PARAM_MASK);
         this.toolParameterDescriptors = new ArrayList<>();
     }
 
-    public TemplateParameterDescriptor(DefaultParameterDescriptor object, int typeMask) {
-        super(object, typeMask);
+    public TemplateParameterDescriptor(DefaultParameterDescriptor object, String parameterType) {
+        super(object, parameterType);
         this.toolParameterDescriptors = new ArrayList<>();
     }
 
     public TemplateParameterDescriptor(ToolParameterDescriptor object) {
-        super(object, object.getParameterTypeMask());
+        super(object, object.getParameterType());
         this.toolParameterDescriptors = new ArrayList<>();
     }
 

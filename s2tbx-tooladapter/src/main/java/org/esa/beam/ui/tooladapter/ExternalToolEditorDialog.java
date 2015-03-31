@@ -8,6 +8,7 @@ import com.bc.ceres.swing.binding.PropertyEditor;
 import com.bc.ceres.swing.binding.PropertyEditorRegistry;
 import com.bc.ceres.swing.binding.internal.TextFieldEditor;
 import org.esa.beam.framework.dataio.ProductIOPlugInManager;
+import org.esa.beam.framework.datamodel.Product;
 import org.esa.beam.framework.gpf.GPF;
 import org.esa.beam.framework.gpf.OperatorSpi;
 import org.esa.beam.framework.gpf.descriptor.AnnotationOperatorDescriptor;
@@ -28,11 +29,15 @@ import org.esa.beam.ui.tooladapter.utils.VariablesTable;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class ExternalToolEditorDialog extends ModalDialog {
 
@@ -54,6 +59,17 @@ public class ExternalToolEditorDialog extends ModalDialog {
     private ExternalToolEditorDialog(AppContext appContext, String helpID, ToolAdapterOperatorDescriptor operatorDescriptor) {
         this(appContext, operatorDescriptor.getAlias(), helpID);
         this.operatorDescriptor = operatorDescriptor;
+
+        //see if all necessary parameters are present:
+        if(operatorDescriptor.getToolParameterDescriptors().stream().filter(p -> p.getName().equals(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_ID)).count() == 0){
+            operatorDescriptor.getToolParameterDescriptors().add(new ToolParameterDescriptor(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_ID, Product.class));
+        }
+        if(operatorDescriptor.getToolParameterDescriptors().stream().filter(p -> p.getName().equals(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_FILE)).count() == 0){
+            operatorDescriptor.getToolParameterDescriptors().add(new ToolParameterDescriptor(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_FILE, Object.class));
+        }
+        if(operatorDescriptor.getToolParameterDescriptors().stream().filter(p -> p.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE)).count() == 0){
+            operatorDescriptor.getToolParameterDescriptors().add(new ToolParameterDescriptor(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE, File.class));
+        }
 
         propertyContainer = PropertyContainer.createObjectBacked(operatorDescriptor);
         ProductIOPlugInManager registry = ProductIOPlugInManager.getInstance();
@@ -196,7 +212,18 @@ public class ExternalToolEditorDialog extends ModalDialog {
         editor = PropertyEditorRegistry.getInstance().findPropertyEditor(propertyDescriptor);
         editorComponent = editor.createEditorComponent(propertyDescriptor, bindingContext);
 
-        preProcessingPanel.add(createCheckboxComponent("writeForProcessing", editorComponent, operatorDescriptor.shouldWriteBeforeProcessing()), getConstraints(1, 0));
+        JComponent writeComponent = createCheckboxComponent("writeForProcessing", editorComponent, operatorDescriptor.shouldWriteBeforeProcessing());
+        if(writeComponent instanceof JCheckBox){
+            ((JCheckBox) writeComponent).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(((JCheckBox) writeComponent).isSelected()){
+
+                    };
+                }
+            });
+        }
+        preProcessingPanel.add(writeComponent, getConstraints(1, 0));
         preProcessingPanel.add(new JLabel("Write before processing using:"), getConstraints(1, 1));
         preProcessingPanel.add(editorComponent, getConstraints(1, 2));
 

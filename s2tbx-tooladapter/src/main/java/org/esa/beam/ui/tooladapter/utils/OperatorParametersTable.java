@@ -23,9 +23,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.File;
-import java.util.EventObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,7 +172,7 @@ public class OperatorParametersTable extends JTable {
                 case 0:
                     return false;
                 case 4:
-                    return typesMap.getKey(CustomParameterClass.getObject(descriptor.getDataType(), descriptor.getParameterTypeMask()));
+                    return typesMap.getKey(CustomParameterClass.getObject(descriptor.getDataType(), descriptor.getParameterType()));
                 case 6:
                     return false;
                 default:
@@ -194,11 +192,10 @@ public class OperatorParametersTable extends JTable {
             if(descriptor.getName().equals(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_ID)){
                 return false;
             }
-            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE) && (columnIndex == 0 || columnIndex == 1 || columnIndex == 4)){
+            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_FILE)){
                 return false;
             }
-            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_ID) && columnIndex <= 1){
-                //if it is the target product parameter, it cannot be deleted and the name cannot be changed
+            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE) && (columnIndex == 0 || columnIndex == 1 || columnIndex == 4)){
                 return false;
             }
             return true;
@@ -240,7 +237,7 @@ public class OperatorParametersTable extends JTable {
                 case 4:
                     //type editing
                     CustomParameterClass customClass = (CustomParameterClass)typesMap.get(aValue);
-                    descriptor.setParameterTypeMask(customClass.getTypeMask());
+                    descriptor.setParameterType(customClass.getTypeMask());
                     if(descriptor.getDataType() != customClass.getaClass()) {
                         descriptor.setDataType(customClass.getaClass());
                         descriptor.setDefaultValue(descriptor.getDefaultValue());

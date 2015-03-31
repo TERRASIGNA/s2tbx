@@ -65,7 +65,7 @@ public class TemplateParameterEditorDialog extends ModalDialog {
         addParamBut.addActionListener(e -> {
             paramsTable.addParameterToTable(new ToolParameterDescriptor("parameterName", String.class));
         });
-        TitledBorder title = BorderFactory.createTitledBorder("Operator Parameters");
+        TitledBorder title = BorderFactory.createTitledBorder("Template Parameters");
         paramsPanel.setBorder(title);
         return paramsPanel;
     }
@@ -99,6 +99,7 @@ public class TemplateParameterEditorDialog extends ModalDialog {
                 }
                 if(result != null){
                     fileContentArea.setText(result);
+                    fileContentArea.setCaretPosition(0);
                 } else {
                     //TODO error message
                     fileContentArea.setText("ERROR!!!");
