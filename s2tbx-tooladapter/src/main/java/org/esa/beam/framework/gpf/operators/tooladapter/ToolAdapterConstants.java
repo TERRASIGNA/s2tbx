@@ -33,4 +33,6 @@ public interface ToolAdapterConstants {
     public static final String TEMPLATE_BEFORE_MASK = "TemplateBeforeExecution";
     public static final String TEMPLATE_AFTER_MASK = "TemplateAfterExecution";
     public static final String REGULAR_PARAM_MASK = "RegularParameter";
+
+    public static final String DEFAULT_PARAM_NAME = "DefaultParameter";
 }

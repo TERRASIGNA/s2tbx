@@ -56,6 +56,16 @@ public class ToolAdapterIO {
         }
     }
 
+    public static void removeOperator(ToolAdapterOperatorDescriptor operator){
+        OperatorSpi spi = GPF.getDefaultInstance().getOperatorSpiRegistry().getOperatorSpi(operator.getName());
+        GPF.getDefaultInstance().getOperatorSpiRegistry().removeOperatorSpi(spi);
+        File rootFolder = getModulesPath();
+        File moduleFolder = new File(rootFolder, operator.getAlias());
+        if (moduleFolder.exists()) {
+            moduleFolder.delete();
+        }
+    }
+
     public static void saveAndRegisterOperator(ToolAdapterOperatorDescriptor operator, String templateContent) throws IOException, URISyntaxException {
         OperatorSpi spi = GPF.getDefaultInstance().getOperatorSpiRegistry().getOperatorSpi(operator.getName());
         File rootFolder = getModulesPath();

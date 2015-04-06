@@ -42,7 +42,7 @@ public class TemplateParameterEditorDialog extends ModalDialog {
         this.parameter = parameter;
         this.operator = new ToolAdapterOperatorDescriptor("OperatorForParameters", ToolAdapterOp.class);
         for(ToolParameterDescriptor param : parameter.getToolParameterDescriptors()) {
-            this.operator.getToolParameterDescriptors().add(param);
+            this.operator.getToolParameterDescriptors().add(new TemplateParameterDescriptor(param));
         }
         this.fileWrapper = fileWrapper;
         setContent(createMainPanel());
@@ -63,7 +63,7 @@ public class TemplateParameterEditorDialog extends ModalDialog {
         tableScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
         paramsPanel.add(tableScrollPane);
         addParamBut.addActionListener(e -> {
-            paramsTable.addParameterToTable(new ToolParameterDescriptor("parameterName", String.class));
+            paramsTable.addParameterToTable(new TemplateParameterDescriptor("parameterName", String.class));
         });
         TitledBorder title = BorderFactory.createTitledBorder("Template Parameters");
         paramsPanel.setBorder(title);

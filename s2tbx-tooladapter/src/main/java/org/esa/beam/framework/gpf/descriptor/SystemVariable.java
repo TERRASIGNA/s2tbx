@@ -46,7 +46,7 @@ public class SystemVariable {
     }
 
     //TODO delete this if not necessary!
-    public static class XStreamConverter implements com.thoughtworks.xstream.converters.Converter {
+    /*public static class XStreamConverter implements com.thoughtworks.xstream.converters.Converter {
 
         public boolean canConvert(Class aClass) {
             return SystemVariable.class.equals(aClass);
@@ -68,5 +68,5 @@ public class SystemVariable {
 
             return headerParameter;
         }
-    }
+    }*/
 }

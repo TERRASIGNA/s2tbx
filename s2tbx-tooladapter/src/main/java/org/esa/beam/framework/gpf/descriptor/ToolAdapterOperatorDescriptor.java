@@ -49,7 +49,7 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
 
     private List<SystemVariable> variables;
 
-    private List<ToolParameterDescriptor> toolParameterDescriptors;
+    private List<TemplateParameterDescriptor> toolParameterDescriptors;
 
     ToolAdapterOperatorDescriptor() {
         this.sourceProductDescriptors = new DefaultSourceProductDescriptor[] { new DefaultSourceProductDescriptor() };
@@ -93,7 +93,7 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
         this.sourceProductsDescriptor = (DefaultSourceProductsDescriptor) obj.getSourceProductsDescriptor();
 
         for (int i = 0; i < obj.getParameterDescriptors().length; i++) {
-            this.toolParameterDescriptors.add(new ToolParameterDescriptor(obj.toolParameterDescriptors.get(i)));
+            this.toolParameterDescriptors.add(new TemplateParameterDescriptor(obj.toolParameterDescriptors.get(i)));
         }
 
         this.targetProductDescriptor = (DefaultTargetProductDescriptor) obj.getTargetProductDescriptor();
@@ -116,11 +116,11 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
         }
     }
 
-    public void removeParamDescriptor(ToolParameterDescriptor descriptor) {
+    public void removeParamDescriptor(TemplateParameterDescriptor descriptor) {
         this.toolParameterDescriptors.remove(descriptor);
     }
 
-    public List<ToolParameterDescriptor> getToolParameterDescriptors() {
+    public List<TemplateParameterDescriptor> getToolParameterDescriptors() {
         return this.toolParameterDescriptors;
     }
 
@@ -393,7 +393,7 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
         xStream.setClassLoader(classLoader);
         xStream.alias("operator", ToolAdapterOperatorDescriptor.class);
 
-        xStream.alias("parameter", ToolParameterDescriptor.class);
+        xStream.alias("parameter", TemplateParameterDescriptor.class);
         xStream.aliasField("parameters", ToolAdapterOperatorDescriptor.class, "toolParameterDescriptors");
 
         xStream.alias("variable", SystemVariable.class);
