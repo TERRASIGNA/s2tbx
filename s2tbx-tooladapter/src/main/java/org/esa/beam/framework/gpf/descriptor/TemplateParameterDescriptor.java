@@ -39,6 +39,14 @@ public class TemplateParameterDescriptor extends ToolParameterDescriptor{
         this.toolParameterDescriptors = new ArrayList<>();
     }
 
+    public TemplateParameterDescriptor(TemplateParameterDescriptor object) {
+        super(object, object.getParameterType());
+        this.toolParameterDescriptors = new ArrayList<>();
+        for(ToolParameterDescriptor subparameter : object.getToolParameterDescriptors()){
+            this.toolParameterDescriptors.add(new TemplateParameterDescriptor(subparameter));
+        }
+    }
+
     public void addParameterDescriptor(ToolParameterDescriptor descriptor){
         this.toolParameterDescriptors.add(descriptor);
     }
@@ -115,8 +123,8 @@ public class TemplateParameterDescriptor extends ToolParameterDescriptor{
         xStream.setClassLoader(classLoader);
         xStream.alias("parameter", TemplateParameterDescriptor.class);
 
-        xStream.alias("subparameter", TemplateParameterDescriptor.class);
-        xStream.aliasField("subparameters", TemplateParameterDescriptor.class, "toolParameterDescriptors");
+        xStream.alias("parameter", TemplateParameterDescriptor.class);
+        xStream.aliasField("toolParameterDescriptors", TemplateParameterDescriptor.class, "toolParameterDescriptors");
 
         return xStream;
     }

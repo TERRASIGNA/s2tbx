@@ -68,6 +68,9 @@ public class ToolAdapterIO {
 
     public static void saveAndRegisterOperator(ToolAdapterOperatorDescriptor operator, String templateContent) throws IOException, URISyntaxException {
         OperatorSpi spi = GPF.getDefaultInstance().getOperatorSpiRegistry().getOperatorSpi(operator.getName());
+        if(spi != null) {
+            GPF.getDefaultInstance().getOperatorSpiRegistry().removeOperatorSpi(spi);
+        }
         File rootFolder = getModulesPath();
         File moduleFolder = new File(rootFolder, operator.getAlias());
         if (!moduleFolder.exists()) {
@@ -75,12 +78,8 @@ public class ToolAdapterIO {
                 throw new OperatorException("Operator folder " + moduleFolder + " could not be created!");
             }
         }
-        if (spi == null) {
-            ToolAdapterOpSpi operatorSpi = new ToolAdapterOpSpi(operator, moduleFolder);
-            GPF.getDefaultInstance().getOperatorSpiRegistry().addOperatorSpi(operator.getName(), operatorSpi);
-        } else {
-            //TODO SHOULD BE REMOVED, and added again, or the refrence get completly changed?
-        }
+        ToolAdapterOpSpi operatorSpi = new ToolAdapterOpSpi(operator, moduleFolder);
+        GPF.getDefaultInstance().getOperatorSpiRegistry().addOperatorSpi(operator.getName(), operatorSpi);
         File descriptorFile = new File(moduleFolder, ToolAdapterConstants.DESCRIPTOR_FILE);
         if (!descriptorFile.exists()) {
             descriptorFile.getParentFile().mkdirs();
@@ -159,5 +158,13 @@ public class ToolAdapterIO {
             }
         }
         return modulePath;
+    }
+
+    public static void saveFileContent(File file, String content) throws IOException{
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write(content);
+            writer.flush();
+            writer.close();
+        }
     }
 }

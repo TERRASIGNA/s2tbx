@@ -1,10 +1,5 @@
 package org.esa.beam.framework.gpf.descriptor;
 
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.converters.UnmarshallingContext;
-import com.thoughtworks.xstream.io.HierarchicalStreamReader;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-
 /**
  * @author Ramona Manda
  */

@@ -84,6 +84,24 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
         this(obj.getName(), obj.getOperatorClass(), obj.getAlias(), obj.getLabel(), obj.getVersion(), obj.getDescription(), obj.getAuthors(), obj.getCopyright());
         this.internal = obj.isInternal();
         this.autoWriteSuppressed = obj.isAutoWriteDisabled();
+        
+        this.preprocessTool = obj.preprocessTool;
+        this.preprocessorExternalTool = obj.preprocessorExternalTool;
+        this.writeForProcessing = obj.writeForProcessing;
+        this.processingWriter = obj.processingWriter;
+        this.mainToolFileLocation = obj.mainToolFileLocation;
+        this.workingDir = obj.workingDir;
+        this.templateFileLocation = obj.templateFileLocation;
+
+        this.progressPattern = obj.progressPattern;
+        this.errorPattern = obj.errorPattern;
+
+        List<SystemVariable> variableList = obj.getVariables();
+        if (variableList != null) {
+            this.variables.addAll(variableList.stream()
+                    .filter(systemVariable -> systemVariable != null)
+                    .map(SystemVariable::createCopy).collect(Collectors.toList()));
+        }
 
         this.sourceProductDescriptors = new DefaultSourceProductDescriptor[obj.getSourceProductDescriptors().length];
         for (int i = 0; i < obj.getSourceProductDescriptors().length; i++) {
@@ -92,8 +110,8 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
 
         this.sourceProductsDescriptor = (DefaultSourceProductsDescriptor) obj.getSourceProductsDescriptor();
 
-        for (int i = 0; i < obj.getParameterDescriptors().length; i++) {
-            this.toolParameterDescriptors.add(new TemplateParameterDescriptor(obj.toolParameterDescriptors.get(i)));
+        for (TemplateParameterDescriptor parameter : obj.getToolParameterDescriptors()) {
+            this.toolParameterDescriptors.add(new TemplateParameterDescriptor(parameter));
         }
 
         this.targetProductDescriptor = (DefaultTargetProductDescriptor) obj.getTargetProductDescriptor();
@@ -108,12 +126,6 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
         this(obj);
         this.name = newName;
         this.alias = newAlias;
-        List<SystemVariable> variableList = obj.getVariables();
-        if (variableList != null) {
-            this.variables.addAll(variableList.stream()
-                    .filter(systemVariable -> systemVariable != null)
-                    .map(SystemVariable::createCopy).collect(Collectors.toList()));
-        }
     }
 
     public void removeParamDescriptor(TemplateParameterDescriptor descriptor) {

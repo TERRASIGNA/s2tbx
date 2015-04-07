@@ -397,7 +397,7 @@ public class ExternalToolEditorDialog extends ModalDialog {
         super.onOK();
         ToolAdapterIO.removeOperator(oldOperatorDescriptor);
         newOperatorDescriptor.setTemplateFileLocation(newOperatorDescriptor.getAlias() + ToolAdapterConstants.TOOL_VELO_TEMPLATE_SUFIX);
-        for(ToolParameterDescriptor param : newOperatorDescriptor.getToolParameterDescriptors()){
+        for(TemplateParameterDescriptor param : newOperatorDescriptor.getToolParameterDescriptors()){
             if(paramsTable.getBindingContext().getBinding(param.getName()) == null){
                 //TODO why is this happening???
             } else {

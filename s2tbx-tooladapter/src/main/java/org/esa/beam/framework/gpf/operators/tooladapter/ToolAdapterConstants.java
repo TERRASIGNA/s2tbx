@@ -27,6 +27,7 @@ public interface ToolAdapterConstants {
      * The id of the tool's target file as it is used in the descriptor.
      */
     public static final String OPERATOR_GENERATED_NAME_SEPARATOR = "_";
+    public static final String OPERATOR_TEMP_FILES_SEPARATOR = "_";
     public static final String TOOL_VELO_TEMPLATE_SUFIX = "-template.vm";
 
     public static final String TEMPLATE_PARAM_MASK = "TemplateParamater";
