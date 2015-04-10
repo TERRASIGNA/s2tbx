@@ -16,7 +16,12 @@ import java.util.List;
  * @author Ramona Manda
  */
 public class TemplateParameterDescriptor extends ToolParameterDescriptor{
-    private List<ToolParameterDescriptor> toolParameterDescriptors;
+    private List<ToolParameterDescriptor> toolParameterDescriptors = new ArrayList<>();
+
+    public TemplateParameterDescriptor(){
+        super();
+        this.toolParameterDescriptors = new ArrayList<>();
+    }
 
     public TemplateParameterDescriptor(String name, Class<?> type){
         super(name, type);
@@ -42,9 +47,9 @@ public class TemplateParameterDescriptor extends ToolParameterDescriptor{
     public TemplateParameterDescriptor(TemplateParameterDescriptor object) {
         super(object, object.getParameterType());
         this.toolParameterDescriptors = new ArrayList<>();
-        for(ToolParameterDescriptor subparameter : object.getToolParameterDescriptors()){
-            this.toolParameterDescriptors.add(new TemplateParameterDescriptor(subparameter));
-        }
+            for (ToolParameterDescriptor subparameter : object.getToolParameterDescriptors()) {
+                this.toolParameterDescriptors.add(new TemplateParameterDescriptor(subparameter));
+            }
     }
 
     public void addParameterDescriptor(ToolParameterDescriptor descriptor){
@@ -56,6 +61,9 @@ public class TemplateParameterDescriptor extends ToolParameterDescriptor{
     }
 
     public List<ToolParameterDescriptor> getToolParameterDescriptors(){
+        if(this.toolParameterDescriptors == null){
+            this.toolParameterDescriptors = new ArrayList<>();
+        }
         return this.toolParameterDescriptors;
     }
 

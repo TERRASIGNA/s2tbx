@@ -206,7 +206,7 @@ public class OperatorParametersTable extends JTable {
             if(descriptor.getName().equals(ToolAdapterConstants.TOOL_SOURCE_PRODUCT_FILE)){
                 return false;
             }
-            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE) && (columnIndex == 0 || columnIndex == 1 || columnIndex == 4)){
+            if(descriptor.getName().equals(ToolAdapterConstants.TOOL_TARGET_PRODUCT_FILE) && (columnIndex == 0 || columnIndex == 1 || columnIndex == 4 || columnIndex == 6)){
                 return false;
             }
             return true;

@@ -251,7 +251,7 @@ public class ExternalToolEditorDialog extends ModalDialog {
 
         JPanel panelToolFiles = new JPanel();
         GridBagLayout layout = new GridBagLayout();
-        layout.columnWidths = new int[]{90, 280};
+        layout.columnWidths = new int[]{120, 250};
         panelToolFiles.setLayout(layout);
 
         panelToolFiles.add(new JLabel("Tool location: "), getConstraints(0, 0));

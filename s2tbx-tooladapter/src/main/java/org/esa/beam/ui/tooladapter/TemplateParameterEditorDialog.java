@@ -84,7 +84,9 @@ public class TemplateParameterEditorDialog extends ModalDialog {
         JPanel filePanel = new JPanel();
         filePanel.add(new JLabel("File:"));
         try {
-            filePanel.add(this.fileWrapper.getUIComponent());
+            JComponent fileEditor = this.fileWrapper.getUIComponent();
+            fileEditor.setPreferredSize(new Dimension(770, 25));
+            filePanel.add(fileEditor);
         } catch (Exception e) {
             //TODO error
             e.printStackTrace();

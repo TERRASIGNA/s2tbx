@@ -47,9 +47,9 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
     private String progressPattern;
     private String errorPattern;
 
-    private List<SystemVariable> variables;
+    private List<SystemVariable> variables = new ArrayList<>();
 
-    private List<TemplateParameterDescriptor> toolParameterDescriptors;
+    private List<TemplateParameterDescriptor> toolParameterDescriptors = new ArrayList<>();
 
     ToolAdapterOperatorDescriptor() {
         this.sourceProductDescriptors = new DefaultSourceProductDescriptor[] { new DefaultSourceProductDescriptor() };
@@ -133,6 +133,9 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
     }
 
     public List<TemplateParameterDescriptor> getToolParameterDescriptors() {
+        if(this.toolParameterDescriptors == null){
+            this.toolParameterDescriptors = new ArrayList<>();
+        }
         return this.toolParameterDescriptors;
     }
 
@@ -310,6 +313,9 @@ public class ToolAdapterOperatorDescriptor implements OperatorDescriptor {
     }
 
     public List<SystemVariable> getVariables() {
+        if(this.variables == null){
+            this.variables = new ArrayList<>();
+        }
         return variables;
     }
 

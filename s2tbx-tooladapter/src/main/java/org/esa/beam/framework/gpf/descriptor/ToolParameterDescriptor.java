@@ -12,6 +12,10 @@ public class ToolParameterDescriptor extends DefaultParameterDescriptor {
 
     private String parameterType = ToolAdapterConstants.REGULAR_PARAM_MASK;
 
+    public ToolParameterDescriptor(){
+        super();
+    }
+
     public ToolParameterDescriptor(String name, Class<?> type){
         super(name, type);
     }
@@ -72,23 +76,26 @@ public class ToolParameterDescriptor extends DefaultParameterDescriptor {
     }
 
     public String getParameterType() {
-        return parameterType;
+        if(this.parameterType == null){
+            this.parameterType = ToolAdapterConstants.REGULAR_PARAM_MASK;
+        }
+        return this.parameterType;
     }
 
     public boolean isTemplateParameter() {
-        return parameterType.equals(ToolAdapterConstants.TEMPLATE_PARAM_MASK);
+        return getParameterType().equals(ToolAdapterConstants.TEMPLATE_PARAM_MASK);
     }
 
     public boolean isTemplateBefore() {
-        return parameterType.equals(ToolAdapterConstants.TEMPLATE_BEFORE_MASK);
+        return getParameterType().equals(ToolAdapterConstants.TEMPLATE_BEFORE_MASK);
     }
 
     public boolean isTemplateAfter() {
-        return parameterType.equals(ToolAdapterConstants.TEMPLATE_AFTER_MASK);
+        return getParameterType().equals(ToolAdapterConstants.TEMPLATE_AFTER_MASK);
     }
 
     public boolean isParameter() {
-        return parameterType.equals(ToolAdapterConstants.REGULAR_PARAM_MASK);
+        return getParameterType().equals(ToolAdapterConstants.REGULAR_PARAM_MASK);
     }
 
     public void setParameterType(String type) {
